@@ -1,0 +1,21 @@
+backend:
+  name: github
+  repo: guilol9596-cloud/union-musicale-cany-barville
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+locale: "fr"
+
+collections:
+  - name: "concerts"
+    label: "Concerts"
+    folder: "contenu/concerts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titre du concert", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "body", widget: "markdown" }
+      - { label: "Affiche", name: "image", widget: "image", required: false }
