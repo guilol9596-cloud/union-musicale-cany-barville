@@ -1,5 +1,0 @@
----
-title: concer de votre vie
-date: 9999-12-30T00:00:00.000+01:00
----
-la chance
