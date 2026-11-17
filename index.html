@@ -454,5 +454,16 @@ for (let i = 1; i <= 26; i++) {
   <footer>
     © 2026 Union Musicale de Cany-Barville
   </footer>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function(user) {
+      if (!user && window.location.hash.includes("invite_token=")) {
+        window.netlifyIdentity.open();
+      }
+    });
+  }
+</script>
 </body>
 </html>
