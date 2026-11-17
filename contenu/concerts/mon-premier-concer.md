@@ -1,6 +1,0 @@
----
-title: "Mon premier concert"
-date: 2026-12-06T15:30:00+01:00
----
-
-Venez assister à notre concert de l'Union Musicale de Cany-Barville !
