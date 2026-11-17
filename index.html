@@ -474,7 +474,7 @@ async function afficherConcerts() {
   if (!zone) return;
 
   try {
-    const reponse = await fetch("/concerts.json");
+    const reponse = await fetch("concerts.json");
     if (!reponse.ok) return;
 
     const concerts = await reponse.json();
