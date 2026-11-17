@@ -1,0 +1,63 @@
+
+name: Mise à jour des concerts
+
+on:
+  push:
+    paths:
+      - "contenu/concerts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mise-a-jour:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer les fichiers
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Générer concerts.json
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          concerts = []
+
+          for fichier in sorted(Path("contenu/concerts").glob("*.md")):
+              texte = fichier.read_text(encoding="utf-8")
+              parties = texte.split("---", 2)
+              if len(parties) < 3:
+                  continue
+
+              infos = {}
+              for ligne in parties[1].splitlines():
+                  if ":" in ligne:
+                      cle, valeur = ligne.split(":", 1)
+                      infos[cle.strip()] = valeur.strip().strip('"').strip("'")
+
+              concerts.append({
+                  "title": infos.get("title", fichier.stem),
+                  "date": infos.get("date", ""),
+                  "body": parties[2].strip(),
+                  "image": infos.get("image", "")
+              })
+
+          Path("concerts.json").write_text(
+              json.dumps(concerts, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+          PY
+
+      - name: Enregistrer les concerts
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Mise à jour automatique des concerts"
+          file_pattern: concerts.json
