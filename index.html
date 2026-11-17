@@ -268,6 +268,8 @@ header p {
       musical dans une ambiance festive.
     </p>
   </div>
+
+<div id="concerts-dynamiques"></div>
 </section>
 
 
@@ -465,5 +467,54 @@ for (let i = 1; i <= 26; i++) {
     });
   }
 </script>
+
+<script>
+async function afficherConcerts() {
+  const zone = document.getElementById("concerts-dynamiques");
+  if (!zone) return;
+
+  try {
+    const reponse = await fetch("/concerts.json");
+    if (!reponse.ok) return;
+
+    const concerts = await reponse.json();
+
+    for (const concert of concerts) {
+      const carte = document.createElement("div");
+      carte.className = "carte-concert";
+
+      const titre = document.createElement("h3");
+      titre.textContent = concert.title;
+
+      const date = document.createElement("p");
+      date.textContent = new Date(concert.date).toLocaleString("fr-FR", {
+        dateStyle: "long",
+        timeStyle: "short"
+      });
+
+      const description = document.createElement("p");
+      description.textContent = concert.body || "";
+
+      carte.append(titre, date, description);
+
+      if (concert.image) {
+        const affiche = document.createElement("img");
+        affiche.src = concert.image;
+        affiche.alt = concert.title;
+        affiche.style.maxWidth = "400px";
+        affiche.style.width = "100%";
+        carte.appendChild(affiche);
+      }
+
+      zone.appendChild(carte);
+    }
+  } catch (erreur) {
+    console.error("Erreur de chargement des concerts :", erreur);
+  }
+}
+
+afficherConcerts();
+</script>
+
 </body>
 </html>
