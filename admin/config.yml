@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: guilol9596-cloud/union-musicale-cany-barville
+  name: git-gateway
   branch: main
 
 media_folder: "images"
