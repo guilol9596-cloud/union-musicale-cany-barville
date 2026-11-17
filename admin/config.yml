@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: guilol9596-cloud/union-musicale-cany-barville
   branch: main
+   base_url: https://union-musicale-auth.guilol95-96.workers.dev 
+     auth_endpoint: auth
 
 media_folder: "images"
 public_folder: "/images"
